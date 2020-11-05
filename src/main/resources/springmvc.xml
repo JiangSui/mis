@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--springmvc-->
+    <context:component-scan base-package="com.ujiuye.mis.controller"/>
+
+    <!--mvc 注解驱动-->
+    <mvc:annotation-driven/>
+
+    <!--试图解析器-->
+<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>-->
+
+    <!--静态资源的访问-->
+    <mvc:default-servlet-handler/>
+
+    <!--全局异常处理器-->
+    <bean class="com.ujiuye.mis.exception.GlobalExceptionHandler"/>
+    <!--拦截器-->
+<!--    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login.html"/>&lt;!&ndash;登录页面&ndash;&gt;
+            <mvc:exclude-mapping path="/login/login"/>&lt;!&ndash; 登录请求&ndash;&gt;
+            <mvc:exclude-mapping path="/css/**"/>   &lt;!&ndash;样式&ndash;&gt;
+            <mvc:exclude-mapping path="/js/**"/>    &lt;!&ndash;js&ndash;&gt;
+            <bean class="com.ujiuye.mis.inteceptor.MyInteceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+    <!--文件上传-->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+
+    </bean>
+</beans>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>办公系统 - 基础表格</title>
+    <meta name="keywords" content="办公系统">
+    <meta name="description" content="办公系统">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    	<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/select/bootstrap-select.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" href="css/plugins/zTreeStyle/zTreeStyle.css" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+      <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>编辑角色</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal" id="updateForm">
+                            <input type="hidden" name="roleid" />
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">角色名称：</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" name="rolename" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">角色描述：</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" name="roledis" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">角色权限：</label>
+
+                                <div class="col-sm-8">
+                                    <ul id="treeDemo" class="ztree"></ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否启用：</label>
+                                <div class="col-sm-8">
+                                    <div class="switch">
+			                            <div class="onoffswitch">
+			                                <input type="checkbox" checked class="onoffswitch-checkbox" id="status" value="1"/>
+			                                <label class="onoffswitch-label" for="status">
+			                                    <span class="onoffswitch-inner"></span>
+			                                    <span class="onoffswitch-switch"></span>
+			                                </label>
+			                            </div>
+			                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button class="btn btn-sm btn-white" type="button" id="updateBtn"><i class="fa fa-save"></i> 保存</button>
+                                    <button class="btn btn-sm btn-white" type="reset"><i class="fa fa-undo"></i> 重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
+ 
+    
+    
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="js/plugins/select/bootstrap-select.min.js"></script>
+	<script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.serializejson.js"></script>
+    <script src="js/jquery.serializejson.js"></script><!--序列化表单-->
+    <script src="js/plugins/ztree/jquery.ztree.core.min.js"></script>
+    <script src="js/plugins/ztree/jquery.ztree.excheck.min.js"></script>
+   <!-- 修复日期控件长度-->
+   <link href="css/customer.css" rel="stylesheet">
+</body>
+</html>
+
+<script>
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+                rootPId: 0
+            }
+        }
+    };
+
+    //获取到 html 传递过来的id值
+    var paramt = window.location.search;
+    var id = paramt.substring(paramt.lastIndexOf("id")+"id".length+1) //获得该用户的id
+
+    $("input[name='roleid']").val(id)
+
+    $(function () {
+
+
+        //加载授权信息
+        // $.ajax({
+        //     url:"role/item",
+        //     dataType:"json",
+        //     type:"get",
+        //     success:function (ret) {
+        //         $.fn.zTree.init($("#treeDemo"), setting, ret.map.item); //加载权限树
+        //     }
+        // })
+
+        //获取该用户信息
+        $.ajax({
+            url:"role/"+id,
+            type:"get",
+            dataType:"json",
+            success:function (ret) {
+                if(ret.status){
+                    $("input[name='rolename']").val(ret.map.item.rolename)
+                    $("input[name='roledis']").val(ret.map.item.roledis)
+                    //遍历
+                    $.fn.zTree.init($("#treeDemo"), setting, ret.map.item.sourcesList); //加载权限树
+                }
+            }
+        })
+
+        //为 保存按钮添加 点击事件
+        $("#updateBtn").click(function(){
+            //序列化表单
+            var ff = $("#updateForm").serializeJSON();
+            //获取到选择的    权限id'
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var nodes = treeObj.getCheckedNodes(true);
+            var arr1 = new Array()
+            for(var i=0;i<nodes.length;i++){
+                arr1[i]=nodes[i].id
+            }
+            var ids = arr1.join("-")
+
+            //提交修改
+            $.ajax({
+                url:"role/update/"+ids,
+                type:"post",
+                data:JSON.stringify(ff),
+                dataType:"json",
+                contentType:"application/json",
+                success:function (ret) {
+                    if(ret.status){
+                        window.location.href="list-role.html"
+                    }
+                }
+            })
+        })
+    })
+
+</script>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.gzsxt.cn/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>办公系统 - 基础表格</title>
+<meta name="keywords" content="办公系统">
+<meta name="description" content="办公系统">
+
+<link rel="shortcut icon" href="favicon.ico">
+<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<link href="css/animate.min.css" rel="stylesheet">
+<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link href="css/plugins/select/bootstrap-select.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/plugins/zTreeStyle/zTreeStyle.css" />
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper2 wrapper-content2 animated fadeInRight">
+		<div class="row">
+			
+			<div class="col-sm">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>资源添加</h5>
+					</div>
+					<div class="ibox-content">
+						<form class="form-horizontal" id="saveForm">
+							<!--隐藏额id-->
+							<input type="hidden" name="id"/>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">菜单资源名称：</label>
+
+								<div class="col-sm-3">
+									<input type="text" class="form-control" name="name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">父菜单：</label>
+
+								<div class="col-sm-3"><!--class="selectpicker form-control  "-->
+									<select name="pid">
+
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">菜单资源路径：</label>
+
+								<div class="col-sm-3">
+									<input type="text" class="form-control" name="url">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">备注：</label>
+								<div class="col-sm-3">
+									<textarea class="form-control" name="remark"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button class="btn btn-sm btn-white" type="button" id="savebtn">
+										<i class="fa fa-save"></i> 保存
+									</button>
+									<button class="btn btn-sm btn-white" type="reset">
+										<i class="fa fa-undo"></i> 重置
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<script src="js/jquery.min.js?v=2.1.4"></script>
+	<script src="js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="js/plugins/select/bootstrap-select.min.js"></script>
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="js/plugins/ztree/jquery.ztree.core.min.js"></script>
+	<script src="js/plugins/ztree/jquery.ztree.exedit.js"></script>
+	<script src="js/jquery.serializejson.js" ></script>
+<script>
+	//接受传递过来的id
+	var id_tmp = window.location.search;
+	var id = id_tmp.substring(id_tmp.lastIndexOf("=")+1,id_tmp.length+1)
+
+	//将id 赋值给 id标签
+	$("input[name='id']").val(id)
+
+	$(function () {
+		console.log("加载完成")
+		//前提, 先要将下拉列表获取到
+		$.ajax({
+			url:"source/item",
+			type:"get",
+			dataType:"json",
+			async:false, //同步  和加载数据
+			contentType:"application/json",
+			success:function (ret) {
+				if(ret.status){
+					//成功  遍历
+					$.each(ret.map.item,function (i,v) {
+						//向下拉列表添加
+						$("select[name='pid']").append("<option value='"+v.id+"' >"+v.name+" </option>")
+					})
+				}else{
+					alert("失败")
+				}
+			}
+		})
+
+		//加载完成, 需要填充好,数据
+		$.ajax({
+			url:"source/"+id,
+			dataType:"json",
+			contentType:"application/json",
+			type:"get",
+			async:false,
+			success:function (ret) {
+				if(ret.status){
+
+					//成功  直接为其设置值
+					$("input[name='name']").val(ret.map.item.name)
+					$("option[value='"+ret.map.item.pid+"']").attr("selected","selected")
+					$("input[name='url']").val(ret.map.item.url)
+					$("textarea[name='remark']").val(ret.map.item.remark)
+				}else{
+					alert(ret.msg)
+				}
+			}
+		})
+
+		//为 保存按钮添加事件,  利用ajax
+		$("#savebtn").click(function () {
+			//序列化 表单
+			var ff = $("#saveForm").serializeJSON();
+			//发送ajax
+			$.ajax({
+				url:"source/update",
+				type:"post",
+				data: JSON.stringify(ff),
+				dataType:"json",
+				contentType:"application/json",
+				success:function (ret) {
+					//返回
+					if(ret.status){
+						window.location.href="/list-resources.html"
+					}else{
+						alert(ret.msg)
+					}
+				}
+			})
+		})
+	})
+</script>
+	
+</body>
+
+
+</html>

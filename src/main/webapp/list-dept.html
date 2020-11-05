@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.gzsxt.cn/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>办公系统 - 基础表格</title>
+    <meta name="keywords" content="办公系统">
+    <meta name="description" content="办公系统">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    	<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    	<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/select/bootstrap-select.min.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper2 wrapper-content2 animated fadeInRight">
+	    <div class="row">
+	    		<div class="col-sm-5">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加部门</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal" id="saveForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">部门编号：</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" name="deptno" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">部门名称：</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" name="dname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">区域：</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" name="local" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button class="btn btn-sm btn-white" type="button" id="savebtn"><i class="fa fa-save"></i> 保存</button>
+                                    <button class="btn btn-sm btn-white" type="reset"><i class="fa fa-undo"></i> 重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+	    		<div class="col-sm-7">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>部门列表 <small>点击修改信息将显示在左边表单</small></h5>
+                    </div>
+                    <div class="ibox-content">                    	
+                        <div class="hr-line-dashed2"></div>
+                        <div class="row">
+                            <div class="table-responsive">
+                            <table class="table table-striped list-table">
+                                <thead>
+                                    <tr>		
+                                        <th>选择</th>
+                                        <th>部门编号</th>
+                                        <th>部门名称</th>
+                                        <th>区域</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+	                        	<div class="col-sm-5">
+	                        		<button class="btn btn-sm btn-primary" id="selectAll" type="button"><i class="fa fa-check-square-o"></i> 全选</button>
+	                        		<button class="btn btn-sm btn-primary" id="reverse" type="button"><i class="fa fa-square-o"></i> 反选</button>
+	                        		<button class="btn btn-sm btn-primary" id="deleteMany" type="button"><i class="fa fa-times-circle-o"></i> 删除</button>
+	                    
+	                        	</div>
+							<div class="col-sm-7 text-right">
+								<div class="btn-group" id="divpage">
+	                            </div>
+							</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+	    	</div>
+	
+	</div>       
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+     <script src="js/plugins/select/bootstrap-select.min.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/jquery.serializejson.js"></script>
+   <script>
+       var page = 1
+       var pageSize = 3
+	$(document).ready(function() {
+		// 设置按钮的样式
+		$('.selectpicker').selectpicker('setStyle', 'btn-white').selectpicker('setStyle', 'btn-sm');
+		
+		//点击删除
+		$('.btndel').click(function () {
+		    swal({
+		        title: "您确定要删除这条信息吗",
+		        text: "删除后将无法恢复，请谨慎操作！",
+		        type: "warning",
+		        showCancelButton: true,
+		        confirmButtonColor: "#DD6B55",
+		        confirmButtonText: "删除",
+		        closeOnConfirm: false
+		    }, function () {//此函数是点击删除执行的函数
+		    		//这里写ajax代码
+		    		// 以下是成功的提示框，请在ajax回调函数中执行
+			    swal("删除成功！", "您已经永久删除了这条信息。", "success");
+		    });
+		});
+		
+		
+		$("#demo1").click(function() {
+			//基本消息框－留着备用
+			swal({
+				title: "欢迎使用SweetAlert",
+				text: "Sweet Alert 是一个替代传统的 JavaScript Alert 的漂亮提示效果。"
+			})
+		});
+
+		//默认 初始化列表
+        show(page,pageSize)
+
+
+        //全选
+        $("#selectAll").click(function () {
+            //全选
+            $("input[name='box']").each(function () {
+                this.checked = 'checked'
+            })
+        })
+        //反转
+        $("#reverse").click(function () {
+            $("input[name='box']").each(function () {
+                this.checked = !this.checked
+            })
+        })
+        //批零删除
+        $("#deleteMany").click(function () {
+            var arr = new Array()
+            //获取所有选择的id
+            $("input[name='box']:checked").each(function (i,v) {
+                arr[i] = v.value
+            })
+            //转换成字符串 交给删除方法
+            dele(arr.join("-"))
+        })
+
+        //保存点击事件
+        $("#savebtn").click(function () {
+            //点击后, 序列化表单
+            var ff = $("#saveForm").serializeJSON()
+            $.ajax({
+                url:"dept/save",
+                data:JSON.stringify(ff),
+                dataType:"json",
+                type:"post",
+                contentType:"application/json",
+                success:function (ret) {
+                    if(ret.status){
+                        window.location.reload()
+                    }
+                }
+            })
+        })
+	});
+
+       //分页展示方法
+	function show(page,pageSize) {
+        $("tbody").empty()
+        $("#divpage").empty()
+        //加载部门信息列表
+        $.ajax({
+            url:"dept/"+page+"/"+pageSize,
+            dataType:"json",
+            type:"get",
+            success:function (ret) {
+                //add
+                //遍历
+
+                $.each(ret.map.items.list,function (i,v) {
+                    $("tbody").append('<tr>\n'+
+                        '<td><input type="checkbox" name="box" value="'+v.deptno+'"></td>\n'+
+                        '<td>'+v.deptno+'</td>\n'+
+                        '<td>'+v.dname+'</td>\n'+
+                        '<td>'+v.local+'</td>\n'+
+                        '<td>\n'+
+                        '<a href="update-dept.html?id='+v.deptno+'"><i class="glyphicon glyphicon-edit  text-navy"></i></a>\n' +
+                        '<a href="javascript:void(0)" class="btndel" onclick="dele('+v.deptno+')"><i class="glyphicon glyphicon-remove  text-navy"></i></a>\n' +
+                        '</td>\n' +
+                        '</tr>')
+                })
+                //获取下面的
+                $("#divpage").append('   <span>共有'+ret.map.items.pages+'页,当前是第'+ret.map.items.pageNum+'页</span>\n'+
+                    '<a href="javascript:void(0)" onclick="show('+ret.map.items.navigateFirstPage+','+pageSize+')">首页</a>\n'+
+                    '<a href="javascript:void(0)" onclick="show('+ret.map.items.prePage+','+pageSize+')">上一页</a>\n'+
+                    '<a href="javascript:void(0)" onclick="show('+ret.map.items.nextPage+','+pageSize+')">下一页</a>\n'+
+                    '<a href="javascript:void(0)" onclick="show('+ret.map.items.navigateLastPage+','+pageSize+')">尾页</a>')
+            }
+        })
+    }
+
+
+       //定义一个删除方法
+       function dele(ids) {
+           $.ajax({
+               url:"dept/"+ids,
+               type:"post",
+               contentType:"application/json",
+               dataType:"json",
+               success:function (ret) {
+                   if(ret.status){
+                       window.location.reload()
+                   }else {
+                       alert("删除失败")
+                   }
+               }
+           })
+       }
+    </script>  
+</body>
+
+
+</html>
+    

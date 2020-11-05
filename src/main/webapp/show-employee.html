@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.gzsxt.cn/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>绿地中央广场综合物业办公系统 - 基础表格</title>
+    <meta name="keywords" content="绿地中央广场综合物业办公系统">
+    <meta name="description" content="绿地中央广场综合物业办公系统">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    	<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/select/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/customer.css" />
+	<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+      <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>档案管理<small>>修改档案</small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form id="updateForm" class="form-horizontal">
+                            <input type="hidden" name="eid" />
+                       	<div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="ename" type="text" class="form-control input-sm">
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">用户名</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="username" type="text" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">年龄</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="eage" type="text" class="form-control input-sm">
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">性别</label>
+                                <div class="col-sm-3 show-text">
+                                    <select name="esex" class="form-control">
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">身份证号码</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="pnum" type="text" class="form-control input-sm">
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">联系电话</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="telephone" type="text" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">部门</label>
+                                <div class="col-sm-3 show-text">
+                                    <select name="dfk" class="form-control">
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">入职时间</label>
+                                <div class="col-sm-3 show-text">
+                                    <input name="hiredate" id="start" class="laydate-icon form-control layer-date">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">赋角色</label>
+                                <div class="col-sm-9 tips">
+                                    <select name="roleid" class="form-control">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-9 show-text">
+                                    <textarea name="remark" class="form-control"></textarea>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                     	<div class="row">
+                     		<div class="hr-line-dashed"></div>
+                     	</div>
+                          
+                         <div class="row">
+                             <div class="form-group">
+                                 <div class="col-sm-3 col-sm-offset-3 text-right">
+                                     <button type="button" id="updateBtn" class="btn btn-primary"><i class="fa fa-save"></i> 修改内容</button>
+                                 </div>
+                                 <div class="col-sm-3">
+                                     <a href="list-employee.html" class="btn btn-white"><i class="fa fa-reply"></i> 返回</a>
+                                 </div>
+                             </div>
+                       </div>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+    
+    
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="js/plugins/select/bootstrap-select.min.js"></script>
+	<script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/jquery.serializejson.js"></script>
+  
+</body>
+</html>
+
+<script>
+    $(function () {
+        //初始化 日期控件
+        laydate({elem: "#start"});
+        //获取到 传递过来的eid
+        var pataer  = window.location.search
+        var eid = pataer.substring(pataer.lastIndexOf("id")+"id".length+1)
+        $("input[name='eid']").val(eid)
+        console.log("员工的id为:"+eid)
+        //初始化 首先根据id 获取到 部门和角色的列表 需要同步
+        //部门
+        $.ajax({
+            url:"dept/item",
+            dataType:"json",
+            type:"get",
+            async:false,
+            contentType:"application/json",
+            success:function (ret) {
+                //遍历返回的值
+                $.each(ret.map.item,function (i,v) {
+                    $("select[name='dfk']").append('<option value="'+v.deptno+'">'+v.dname+'</option>')
+                })
+            }
+        })
+
+        //角色请求
+        $.ajax({
+            url:"role/all",
+            dataType:"json",
+            type:"get",
+            async:false,
+            contentType:"application/json",
+            success:function (ret) {
+                if(ret.status){
+                    $.each(ret.map.item,function (i,v) {
+                        //遍历 插入
+                        $("select[name='roleid']").append('<option value="'+v.roleid+'">'+v.rolename+'</option>')
+                    })
+                }
+            }
+        })
+
+        //加载用户数据
+        $.ajax({
+            url:"emp/"+eid,
+            type:"get",
+            dataType:"json",
+            contentType:"application/json",
+            success:function(ret){
+                console.log("性别:"+ret.map.item.esex)
+                if(ret.status){
+                    //给值
+                    $("input[name='ename']").val(ret.map.item.ename)
+                    $("input[name='eage']").val(ret.map.item.eage)
+                    $("input[name='telephone']").val(ret.map.item.telephone)
+                    $("input[name='hiredate']").val(ret.map.item.hiredate)
+                    $("input[name='pnum']").val(ret.map.item.pnum)
+                    $("input[name='username']").val(ret.map.item.username)
+                    $("textarea[name='remark']").val(ret.map.item.remark)
+
+                    //性别
+                    $("option[value='"+ret.map.item.esex+"']").attr("selected","selected")
+                    //角色
+                    $("option[value='"+ret.map.item.roleid+"']").attr("selected","selected")
+                    //部门
+                    $("option[value='"+ret.map.item.dfk+"']").attr("selected","selected")
+                }
+            }
+        })
+
+        //为修改按钮添加 点击事件
+        $("#updateBtn").click(function () {
+            //序列化表单
+            var ff = $("#updateForm").serializeJSON()
+            console.log(JSON.stringify(ff))
+            $.ajax({
+                url:"emp/update",
+                data:JSON.stringify(ff),
+                dataType:"json",
+                type:"post",
+                contentType:"application/json",
+                success:function (ret) {
+                    if(ret.status){
+                        window.location.href = "list-employee.html";
+                    }
+                }
+            })
+        })
+    })
+</script>
+
